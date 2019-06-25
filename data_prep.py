@@ -1,3 +1,5 @@
+import statistics
+import math
 import numpy as np
 from sklearn.model_selection import train_test_split
 from sklearn.decomposition import PCA
@@ -30,7 +32,16 @@ for i in range(features.shape[0]):
     # if targets[i] == 2:
         for j in range(features.shape[1]):
             mean = np.mean(features[:, j])
-            features[i, j] = ((features[i, j] / mean) + features[i, j])**2
+            features[i, j] = ((features[i, j] / mean) * features[i, j]) + round(features[i, j] - mean,2)*10
+            # if j == 0:
+            #     features[i, j] = (features[i, j]/mean)
+            # else:
+            #     features[i, j] = (features[i, j]/mean) * features[i, j-1] 
+            
+            #print("Desvio Padrao: " + str(statistics.pstdev(features[:, j])))
+            # features[i, j] = ((features[i, j] / mean) * features[i, j])**2
+
+
 # pca = PCA(n_components = 4)
 # features = pca.fit_transform(abalone)
 
