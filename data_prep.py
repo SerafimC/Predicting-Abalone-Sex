@@ -32,7 +32,9 @@ for i in range(features.shape[0]):
     # if targets[i] == 2:
         for j in range(features.shape[1]):
             mean = np.mean(features[:, j])
-            features[i, j] = ((features[i, j] / mean) * features[i, j]) + round(features[i, j] - mean,2)*10
+            # features[i, j] = ((features[i, j] / mean) * features[i, j]) + round(features[i, j] - mean,2)*10 #57% seed 0
+            print(features[i, j]-mean)
+            features[i, j] = ((features[i, j]-mean)**2+features[i, j])
             # if j == 0:
             #     features[i, j] = (features[i, j]/mean)
             # else:
