@@ -28,28 +28,22 @@ abalone = np.asarray(abalone)
 # Features
 features = abalone
 
+vs = np.zeros(features.shape[1])
+
+for i in range(features.shape[1]):
+    vs[i] = statistics.pstdev(features[:, i])
+
 for i in range(features.shape[0]):
-    # if targets[i] == 2:
-        for j in range(features.shape[1]):
-            mean = np.mean(features[:, j])
-            # features[i, j] = ((features[i, j] / mean) * features[i, j]) + round(features[i, j] - mean,2)*10 #57% seed 0
-            print(features[i, j]-mean)
-            features[i, j] = ((features[i, j]-mean)**2+features[i, j])
-            # if j == 0:
-            #     features[i, j] = (features[i, j]/mean)
-            # else:
-            #     features[i, j] = (features[i, j]/mean) * features[i, j-1] 
-            
-            #print("Desvio Padrao: " + str(statistics.pstdev(features[:, j])))
-            # features[i, j] = ((features[i, j] / mean) * features[i, j])**2
+    for j in range(features.shape[1]):
+        mean = np.mean(features[:, j])
+        features[i, j] = ((features[i, j] / mean) * features[i, j]) + round(features[i, j] - mean,2)*10 #57% seed 0
+        # features[i, j] = (((features[i, j]-mean)) / (1-vs[j]))*4 + features[i, j]
+        # print(features[i, j])
 
 
-# pca = PCA(n_components = 4)
-# features = pca.fit_transform(abalone)
-
-X_train, X_test, y_train, y_test = train_test_split(features, targets, test_size = 0.3, random_state=0)
+X_train, X_test, y_train, y_test = train_test_split(features, targets, test_size = 0.3, random_state = 0)
 
 target_names = np.array(['F', 'I', 'M'])
 feature_names = np.array(['len', 'diameter', 'height', 'Whole weight',
-                'Shucked weight', 'Viscera weight',
-                'Shell weight', 'Rings'])
+                            'Shucked weight', 'Viscera weight',
+                            'Shell weight', 'Rings'])
